@@ -14,12 +14,12 @@
 // Colors
 GLfloat WHITE[] = {1, 1, 1};
 GLfloat RED[] = {1, 0, 0};
-GLfloat GREEN[] = {1, 0, 0};
+GLfloat GREEN[] = {0, 1, 0};
 GLfloat MAGENTA[] = {1, 0, 1};
 
 
 CHECKERBOARD *chao = createCheckerboard();			//chão pelo qual a aranha se locomove
-spider_t *spider = spider_create(30, 1, 20, WHITE);	//inicialização da aranha	
+spider_t *spider = spider_create(30, 1, 20, GREEN);	//inicialização da aranha	
 
 void display();
 
@@ -54,7 +54,7 @@ int main (int argc, char *argv[]){
 void display(){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	gluLookAt(5.0, 3.0, -0.5, centerx(chao), 0.0, centerz(chao), 0.0, 1.0, 0.0);
+	gluLookAt(31.3, 2.75, 7.0, centerx(chao) - 10.0, 0.0, centerz(chao) + 10.0, 0.0, 1.0, 0.0);
 
 	drawCheckerboard(chao);
 	spider_draw(spider);

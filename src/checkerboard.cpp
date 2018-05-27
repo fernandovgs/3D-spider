@@ -10,23 +10,24 @@ GLfloat red[] = {1, 0, 0};
 GLfloat green[] = {1, 0, 0};
 GLfloat magenta[] = {1, 0, 1};
 
+/* Estrutura do chão */
 struct checkerboard{
 	int displayListId;
 	int width;
 	int depth;
 };
 
-
+/* Retorna a posição X do chão */
 double centerx(CHECKERBOARD *c){
 	return c->width/2.0;
 }
 
-
+/* Retorna a posição Z do chão */
 double centerz(CHECKERBOARD *c){
 	return c->depth/2.0;
 }
 
-/**/
+/* Criação de uma estrutura de um chão, em forma de tabuleiro */
 CHECKERBOARD *createCheckerboard(){
 	CHECKERBOARD *c = (CHECKERBOARD*) malloc(sizeof(CHECKERBOARD));
 
@@ -37,7 +38,7 @@ CHECKERBOARD *createCheckerboard(){
 	return c;
 }
 
-/**/
+/* Desenha o chão nas cores branca e azul */
 void drawCheckerboard(CHECKERBOARD *c){
 	c->displayListId = glGenLists(1);
 	glNewList(c->displayListId, GL_COMPILE);
@@ -46,8 +47,10 @@ void drawCheckerboard(CHECKERBOARD *c){
 
 	glNormal3d(0, 1, 0);
 
+
 	for (int i = 0; i < c->width - 1; i++){
 		for (int j = 0; j < c->depth - 1; j++){
+			//Faz uma verificação para a próxima cor do piso
 			glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE,
 				(i + j) % 2 == 0 ? red : white);
 			glVertex3d(i, 0, j);

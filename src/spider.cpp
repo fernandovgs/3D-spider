@@ -23,7 +23,7 @@ spider_t* spider_create(GLfloat x, GLfloat y, GLfloat z, GLfloat *color) {
 	spider->targetX = 0.0;
 	spider->targetY = 0.0;
 	spider->targetZ = 0.0;
-	spider->headRadius = 1.0f;
+	spider->headRadius = 0.89f;
 	spider->abdomenRadius = 1.01f;
 	spider->distanceBetweenLegs = 5;
 	spider->rotating = false;
@@ -44,4 +44,18 @@ void spider_draw(spider_t* spider) {
 	    glTranslated(spider->posX, spider->posY, spider->posZ);
 	    glutSolidSphere(spider->headRadius, num_segments, num_segments);
     glPopMatrix();
+
+    //Cefalotórax da aranha
+	glPushMatrix();
+	    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, spider->color);
+	    glTranslated(spider->posX, spider->posY, spider->posZ);
+	    glutSolidSphere(spider->headRadius, num_segments, num_segments);
+    glPopMatrix();
+
+    glPushMatrix();
+	    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, spider->color);
+	    glTranslated(spider->posX + spider->headRadius, spider->posY, spider->posZ + spider->headRadius);
+	    glutSolidSphere(spider->abdomenRadius, num_segments, num_segments);
+    glPopMatrix();
+
 }
