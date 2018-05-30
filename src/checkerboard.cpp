@@ -45,7 +45,7 @@ void drawCheckerboard(CHECKERBOARD *c){
 
 	glBegin(GL_QUADS);
 
-	glNormal3d(0, 1, 0);
+	glNormal3d(0.0, 1.0, 0.0);
 
 
 	for (int i = 0; i < c->width - 1; i++){

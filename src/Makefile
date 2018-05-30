@@ -10,4 +10,4 @@ run:
 	./exe
 clean:
 	rm *.o
-all: clean	checkerboard	spider	main	compile	run
+all: checkerboard	spider	main	compile	run

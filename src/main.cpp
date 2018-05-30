@@ -9,6 +9,7 @@
 
 #define WINDOW_WIDTH 600
 #define WINDOW_HEIGHT 600
+#define delta 1000/60
 
 //Variáveis globais
 // Colors
@@ -19,13 +20,15 @@ GLfloat MAGENTA[] = {1, 0, 1};
 
 
 CHECKERBOARD *chao = createCheckerboard();			//chão pelo qual a aranha se locomove
-spider_t *spider = spider_create(30, 1, 20, GREEN);	//inicialização da aranha	
+spider_t *spider = spider_create(1.0, 1.0, 3.0, GREEN);	//inicialização da aranha	
 
 void display();
 
 void reshape(int w, int h);
 
-void keyboard();
+void keyboard(unsigned char key, int x, int y);
+
+void keyboardUp(unsigned char key, int x, int y);
 
 void init();
 
@@ -41,7 +44,8 @@ int main (int argc, char *argv[]){
 	glutDisplayFunc(display);
 	glutTimerFunc(100, timer, 0);
 	glutReshapeFunc(reshape);
-	//glutKeyboardFunc(keyboard);
+	glutKeyboardFunc(keyboard);
+	glutKeyboardUpFunc(keyboardUp);
 
 	init();
 
@@ -54,7 +58,7 @@ int main (int argc, char *argv[]){
 void display(){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	gluLookAt(31.3, 2.75, 7.0, centerx(chao) - 10.0, 0.0, centerz(chao) + 10.0, 0.0, 1.0, 0.0);
+	gluLookAt(0.0, 2.0, -7.0, 0.0, 0.0, centerz(chao), 0.0, 1.0, 0.0);
 
 	drawCheckerboard(chao);
 	spider_draw(spider);
@@ -68,14 +72,33 @@ void reshape(int w, int h){
 	glViewport(0, 0, w, h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(40.0, GLfloat(w) / GLfloat(h), 1.0, 150.0);
+	gluPerspective(40.0, GLfloat(w) / GLfloat(h), 1.0, 50.0);
 	glMatrixMode(GL_MODELVIEW);
-	glutPostRedisplay();
 }
 
 
-void keyboard(){
+void keyboard(unsigned char key, int x, int y){
+	std::cout << "Key pressed: " << key << ".\n";
+	switch(key){
+		case 'w': 
+			spider_set_target(spider, 'w'); break;
+		
+		case 'a': 
+			spider_set_target(spider, 'a'); break;
+		
+		case 's': 
+			spider_set_target(spider, 's'); break;
+		
+		case 'd': 
+			spider_set_target(spider, 'd'); break;
 
+		case ' ':  break;
+	}
+}
+
+void keyboardUp(unsigned char key, int x, int y){
+	std::cout << "Key released: " << key << ".\n";
+	spider_set_target(spider, ' ');
 }
 
 //função tratadora de eventos para o redesenho da tela
@@ -90,6 +113,7 @@ void init(){
 }
 
 void timer(int v) {
-  glutPostRedisplay();
-  glutTimerFunc(1000/60, timer, v);
+	spider_update(spider);
+	glutPostRedisplay();
+	glutTimerFunc(delta, timer, v);
 }
