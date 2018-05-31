@@ -98,7 +98,9 @@ void keyboard(unsigned char key, int x, int y){
 
 void keyboardUp(unsigned char key, int x, int y){
 	std::cout << "Key released: " << key << ".\n";
-	spider_set_target(spider, ' ');
+
+	//A tecla espaço muda somente a câmera
+	if (key != ' ') spider_set_target(spider, ' ');
 }
 
 //função tratadora de eventos para o redesenho da tela

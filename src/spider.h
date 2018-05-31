@@ -2,11 +2,12 @@
 
 typedef struct {
 	GLfloat posX, posY, posZ;
-	GLfloat targetX, targetY, targetZ, distanceThreshold;
-	GLfloat angle, angleThreshold;
+	GLfloat dX, dY, dZ, distanceThreshold;
+	GLfloat angle, angleThreshold, angle_variation;
 	GLfloat rotationSpeed, translationSpeed;
 	GLfloat abdomenRadius, headRadius;
 	GLfloat distanceBetweenLegs;
+	GLfloat distanceBetweenSpheres;
 	GLfloat modifierX, modifierZ;
 	bool rotateClockwise, rotating;
 
