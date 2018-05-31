@@ -5,21 +5,19 @@
 #include "checkerboard.h"
 #include "spider.h"
 
-//#include "spider.h"
-
-#define WINDOW_WIDTH 600
-#define WINDOW_HEIGHT 600
+#define WINDOW_WIDTH 1200
+#define WINDOW_HEIGHT 700
 #define delta 1000/60
 
 //Variáveis globais
-// Colors
+//Cores
 GLfloat WHITE[] = {1, 1, 1};
 GLfloat RED[] = {1, 0, 0};
 GLfloat GREEN[] = {0, 1, 0};
 GLfloat MAGENTA[] = {1, 0, 1};
 
 
-CHECKERBOARD *chao = createCheckerboard();			//chão pelo qual a aranha se locomove
+CHECKERBOARD *chao = checkerboard_create();			//chão pelo qual a aranha se locomove
 spider_t *spider = spider_create(1.0, 1.0, 3.0, GREEN);	//inicialização da aranha	
 
 void display();
@@ -38,7 +36,7 @@ int main (int argc, char *argv[]){
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowPosition(80, 80);
-	glutInitWindowSize(800, 600);
+	glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	glutCreateWindow("Aranha 3D");
 
 	glutDisplayFunc(display);
@@ -57,11 +55,34 @@ int main (int argc, char *argv[]){
 
 void display(){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
-	gluLookAt(0.0, 2.0, -7.0, 0.0, 0.0, centerz(chao), 0.0, 1.0, 0.0);
 
-	drawCheckerboard(chao);
-	spider_draw(spider);
+	//Janela eixo Z
+	glViewport(0, 0, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+	glLoadIdentity();
+	gluLookAt(spider_getX(spider) - 1.0, 1.0, -7.0, spider_getX(spider), 1.0, spider_getZ(spider), 0.0, 1.0, 0.0);
+	checkerboard_draw(chao);	//desenha o chão
+	spider_draw(spider);		//desenha a aranha
+
+	//janela "livre"
+	glViewport(WINDOW_WIDTH / 2, 0, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+	glLoadIdentity();
+	gluLookAt(spider_getX(spider), 8.0, -spider_getZ(spider), spider_getX(spider), spider_getY(spider), spider_getZ(spider), 0.0, 1.0, 0.0);
+	checkerboard_draw(chao);	//desenha o chão
+	spider_draw(spider);		//desenha a aranha
+
+	// janela eixo X
+	glViewport(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+	glLoadIdentity();
+	gluLookAt(8.0, 3.0, spider_getZ(spider), spider_getX(spider), 0.0, spider_getZ(spider), 0.0, 1.0, 0.0);
+	checkerboard_draw(chao);	//desenha o chão
+	spider_draw(spider);		//desenha a aranha
+
+	// janela Y
+	glViewport(0, WINDOW_HEIGHT / 2, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+	glLoadIdentity();
+	gluLookAt(spider_getX(spider), 10.0, 0.0, spider_getX(spider), 0.0, spider_getZ(spider), 0.0, 1.0, 0.0);
+	checkerboard_draw(chao);	//desenha o chão
+	spider_draw(spider);		//desenha a aranha
 
 	glFlush();
 	glutSwapBuffers();

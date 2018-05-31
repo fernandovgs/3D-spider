@@ -2,7 +2,7 @@
 
 typedef struct checkerboard CHECKERBOARD;
 
-double centerx(CHECKERBOARD *c);
-double centerz(CHECKERBOARD *c);
-CHECKERBOARD *createCheckerboard();
-void drawCheckerboard(CHECKERBOARD *c);
+double checkerboard_getCenterX(CHECKERBOARD *c);
+double checkerboard_getCenterZ(CHECKERBOARD *c);
+CHECKERBOARD *checkerboard_create();
+void checkerboard_draw(CHECKERBOARD *c);

@@ -164,3 +164,16 @@ void spider_update(spider_t *spider){
 	spider->posZ += spider->modifierZ;
 	spider->angle += spider->angle_variation;
 }
+
+GLfloat spider_getX(spider_t *spider){
+	return spider->posX + (spider->distanceBetweenSpheres * sin(deg_to_rad(spider->angle)));
+}
+
+GLfloat spider_getY(spider_t *spider){
+	return spider->posY + 5.0;
+}
+
+GLfloat spider_getZ(spider_t *spider){
+	return spider->posZ + (spider->distanceBetweenSpheres * cos(deg_to_rad(spider->angle)));
+}
+

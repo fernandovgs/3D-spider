@@ -4,7 +4,7 @@
 #include <cmath>
 #include "checkerboard.h"
 
-// Colors
+//Cores
 GLfloat white[] = {1, 1, 1};
 GLfloat red[] = {1, 0, 0};
 GLfloat green[] = {1, 0, 0};
@@ -18,17 +18,17 @@ struct checkerboard{
 };
 
 /* Retorna a posição X do chão */
-double centerx(CHECKERBOARD *c){
+double checkerboard_getCenterX(CHECKERBOARD *c){
 	return c->width/2.0;
 }
 
 /* Retorna a posição Z do chão */
-double centerz(CHECKERBOARD *c){
+double checkerboard_getCenterZ(CHECKERBOARD *c){
 	return c->depth/2.0;
 }
 
 /* Criação de uma estrutura de um chão, em forma de tabuleiro */
-CHECKERBOARD *createCheckerboard(){
+CHECKERBOARD *checkerboard_create(){
 	CHECKERBOARD *c = (CHECKERBOARD*) malloc(sizeof(CHECKERBOARD));
 
 	c->displayListId = 0;
@@ -39,7 +39,7 @@ CHECKERBOARD *createCheckerboard(){
 }
 
 /* Desenha o chão nas cores branca e azul */
-void drawCheckerboard(CHECKERBOARD *c){
+void checkerboard_draw(CHECKERBOARD *c){
 	c->displayListId = glGenLists(1);
 	glNewList(c->displayListId, GL_COMPILE);
 
